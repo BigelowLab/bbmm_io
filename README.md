@@ -77,3 +77,36 @@ d[[1]] |>
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
     ##       0       0       0       0       0       0 4399895
+
+# Storage demand
+
+Let’s see about the size of the files.
+
+``` r
+orig_size = file.info("Jul01.nc")$size
+encoded_size = file.info("encoded.bin")$size
+
+cat("original nc size:", orig_size, "\n")
+```
+
+    ## original nc size: 17786423
+
+``` r
+cat("encoded bin size:", encoded_size, "\n")
+```
+
+    ## encoded bin size: 220899
+
+``` r
+cat("ratio original/encoded:", orig_size/encoded_size, "\n")
+```
+
+    ## ratio original/encoded: 80.51835
+
+``` r
+cat("\n\nOh\n\n")
+```
+
+    ## 
+    ## 
+    ## Oh
