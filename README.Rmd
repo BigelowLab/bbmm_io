@@ -1,0 +1,63 @@
+---
+title: "bbmm_io"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Provides simple tools to reduce the output size of rasters with extensive **zero** and **NA** regions.
+
+
+# The original data
+First read in an example dataset (that is also the template) and plot it.
+
+```{r orig}
+source("io.R")
+orig = read_template(mask = FALSE)
+pretty_plot(orig, 
+            title = "original", 
+            axes = TRUE)
+```
+
+
+# Encoding
+Now we encode it which generates a matrix for non-zero and non-NA pixels.  We get back `index`, `lon`, `lat` and `value`.
+
+```{r encode}
+e = encode_raster(orig)
+head(e)
+```
+
+## Or just write it and ignore encoding
+
+We can skip that step by simply calling the encoded writer.
+
+```{r write}
+e = write_encoded(orig, file = "encoded.bin")
+```
+
+# Read it back
+
+Now read it back.
+
+```{r read}
+x = read_encoded(file = "encoded.bin")
+pretty_plot(x,
+            title = "post-encoding",
+            axes = TRUE)
+```
+
+Well, the seem to be the same.
+
+# Difference
+
+What about the difference?  Say `x - orig`?
+
+```{r diff}
+d = x[1] - orig[1]
+d[[1]] |>
+  as.vector() |>
+  summary()
+```
